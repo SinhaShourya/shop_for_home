@@ -1,0 +1,81 @@
+<h1 mat-dialog-title>Update Product</h1>
+<div mat-dialog-content class="mat-typography">
+  <div>
+    <form [formGroup]="fg" (submit)="saveproduct(fg.value)" novalidate>
+      <div class="form-group">
+        <label>Product Name</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="pname"
+          name="pname"
+          [(ngModel)]="p.pname"
+        />
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select
+          class="form-control"
+          formControlName="category"
+          name="category"
+          [(ngModel)]="p.category.id"
+        >
+          <option value="{{ p.category.id }}">{{ p.category.catname }}</option>
+          <option *ngFor="let c of cats" value="{{ c.id }}">
+            {{ c.catname }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="descr"
+          name="descr"
+          [(ngModel)]="p.descr"
+        />
+      </div>
+      <div class="form-group">
+        <label>Price</label>
+        <input
+          type="number"
+          min="1"
+          class="form-control"
+          formControlName="price"
+          name="price"
+          [(ngModel)]="p.price"
+        />
+      </div>
+      <div class="form-group">
+        <label>Stock</label>
+        <input
+          type="number"
+          min="1"
+          class="form-control"
+          formControlName="stock"
+          name="stock"
+          [(ngModel)]="p.stock"
+        />
+      </div>
+      <div class="form-group">
+        <label>Product Name</label>
+        <input
+          type="file"
+          class="form-control"
+          formControlName="pic"
+          (change)="saveFile($event)"
+          accept=".jpg,.png"
+          name="pic"
+          [(ngModel)]="p.pic"
+        />
+      </div>
+      <input
+        type="submit"
+        [mat-dialog-close]="true"
+        value="Update Product"
+        class="btn btn-primary"
+      />
+    </form>
+  </div>
+</div>
