@@ -1,1 +1,1 @@
-# shop_from_home
+# shop_for_home
