@@ -31,7 +31,7 @@ import { UpdatestockComponent } from './updatestock/updatestock.component';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { UpdateDeleteModalComponent } from './update-delete-modal/update-delete-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import {MatCardModule} from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,8 +54,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     UpdatestockComponent,
     UpdateProductComponent,
     UpdateDeleteModalComponent,
+    
+    
   ],
   imports: [
+    
     CommonModule,
     BrowserModule,
     AppRoutingModule,
@@ -64,7 +67,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     MatDialogModule,
     ToastrModule.forRoot(),
-  ],
+    MatCardModule,
+    ],
   providers: [ApiService],
   bootstrap: [AppComponent],
 })
