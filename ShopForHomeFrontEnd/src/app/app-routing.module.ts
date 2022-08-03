@@ -1,43 +1,74 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AdminloginComponent } from './adminlogin/adminlogin.component';
-import { CategoryComponent } from './category/category.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { OrderhistoryComponent } from './orderhistory/orderhistory.component';
-import { OrdersComponent } from './orders/orders.component';
-import { ProductsComponent } from './products/products.component';
-import { ProfileComponent } from './profile/profile.component';
-import { RegisterComponent } from './register/register.component';
-import { UsersComponent } from './users/users.component';
-import { ViewcartComponent } from './viewcart/viewcart.component';
-import { WishlistComponent } from './wishlist/wishlist.component';
-import { AdminhomeComponent } from './adminhome/adminhome.component';
-import { UpdatestockComponent } from './updatestock/updatestock.component';
-import { UpdateProductComponent } from './update-product/update-product.component';
+import {Component, NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {CardComponent} from './pages/card/card.component';
+import {LoginComponent} from './pages/login/login.component';
+import {SignupComponent} from './pages/signup/signup.component';
+import {DetailComponent} from './pages/product-detail/detail.component';
+import {CartComponent} from './pages/cart/cart.component';
+import {AuthGuard} from "./_guards/auth.guard";
+import {OrderComponent} from "./pages/order/order.component";
+import {OrderDetailComponent} from "./pages/order-detail/order-detail.component";
+import {ProductListComponent} from "./pages/product-list/product.list.component";
+import {UserDetailComponent} from "./pages/user-edit/user-detail.component";
+import {ProductEditComponent} from "./pages/product-edit/product-edit.component";
+import {Role} from "./enum/Role";
+import { EmailComponent } from './pages/email/email.component';
+import { DiscountComponent } from './pages/discount/discount.component';
+import { products } from './mockData';
+import { AdminuserComponent } from './pages/adminuser/adminuser.component';
+import { WishListComponent } from './pages/wish-list/wish-list.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'category', component: CategoryComponent },
-  { path: 'products', component: ProductsComponent },
-  { path: 'orders', component: OrdersComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'wishlist', component: WishlistComponent },
-  { path: 'users', component: UsersComponent },
-  { path: 'viewcart', component: ViewcartComponent },
-  { path: 'history', component: OrderhistoryComponent },
-  { path: 'admin', component: AdminloginComponent },
-  { path: 'adminhome', component: AdminhomeComponent },
-  { path: 'updatestock/:id', component: UpdatestockComponent },
-  { path: 'update-product/:id', component: UpdateProductComponent },
+    {path: '', redirectTo: '/product', pathMatch: 'full'},
+    {path: 'product/:id', component: DetailComponent},
+    {path: 'category/:id', component: CardComponent},
+    {path: 'product', component: CardComponent},
+    {path: 'category', component: CardComponent},
+    {path: 'login', component: LoginComponent},
+    {path: 'logout', component: LoginComponent},
+    {path: 'register', component: SignupComponent},
+    {path: 'cart', component: CartComponent},
+    {path: 'success', component: SignupComponent},
+    {path: 'order/:id', component: OrderDetailComponent, canActivate: [AuthGuard]},
+    {path: 'order', component: OrderComponent, canActivate: [AuthGuard]},
+    {path: 'email', component: EmailComponent},
+    {path: 'admin/user', component: AdminuserComponent},
+    {path:'product/email', component: ProductListComponent},
+    {path:'discount',component:DiscountComponent},
+    {path:'wishlist',component:WishListComponent},
+    {path: 'seller', redirectTo: 'seller/product', pathMatch: 'full'},
+    {
+        path: 'seller/product',
+        component: ProductListComponent,
+        canActivate: [AuthGuard],
+        data: {roles: [Role.Manager, Role.Employee]}
+    },
+    {
+        path: 'profile',
+        component: UserDetailComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'seller/product/:id/edit',
+        component: ProductEditComponent,
+        canActivate: [AuthGuard],
+        data: {roles: [Role.Manager, Role.Employee]}
+    },
+    {
+        path: 'seller/product/:id/new',
+        component: ProductEditComponent,
+        canActivate: [AuthGuard],
+        data: {roles: [Role.Employee]}
+    },
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+    declarations: [],
+    imports: [
+        RouterModule.forRoot(routes)//{onSameUrlNavigation: 'reload'}
+    ],
+    exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}
